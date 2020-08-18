@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <p>Some text</p>
+    <iframe src="iframe.html" width=100% style="border:0 ;" onload="
+            console.log(&quot;here1&quot;)
+            var data = {
+                w1: [&quot;must&quot;, &quot;can&quot;],
+                w2: [&quot;hospital&quot;, &quot;restaurant&quot;, &quot;bus&quot;]
+            }
+            this.contentWindow.postMessage(JSON.stringify(data), '*');
+    "></iframe>
+
+    <p>Some text 2</p>
+    <iframe src="iframe.html" width=100% style="border:0 ;" onload="
+            console.log(&quot;here2&quot;)
+            var data = {
+                w1: [&quot;must1&quot;, &quot;can1&quot;],
+                w2: [&quot;hospital&quot;, &quot;restaurant&quot;, &quot;bus&quot;]
+            }
+            this.contentWindow.postMessage(JSON.stringify(data), '*');
+    "></iframe>
+
+<iframe src="iframe.html" width=100% style="border:0 ;" onload="var data = {w1: [&quot;line 1\\\&quot;test&quot;, &quot;line 2&quot;, ],w2: [&quot;line 3&quot;, &quot;line 4&quot;, ]};this.contentWindow.postMessage(JSON.stringify(data), '*');"></iframe>
+</body>
+
+</html>

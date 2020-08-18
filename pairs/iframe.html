@@ -1,0 +1,158 @@
+<html>
+
+<head>
+    <style>
+        .ml6 {
+            position: relative;
+            font-weight: 900;
+            font-size: 3.3em;
+        }
+
+        .ml6 .text-wrapper {
+            position: relative;
+            display: inline-block;
+            padding-top: 0.2em;
+            padding-right: 0.05em;
+            padding-bottom: 0.1em;
+            overflow: hidden;
+        }
+
+        .ml6 .letter {
+            display: inline-block;
+            line-height: 1em;
+        }
+
+        .ml6 .letter2 {
+            display: inline-block;
+            line-height: 1em;
+            color: #f00;
+        }
+    </style>
+    <script>
+
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+        var pairs = []
+        window.addEventListener("message", function (event) {
+            console.log(event.data)
+            data = JSON.parse(event.data)
+            w1 = data.w1
+            w2 = data.w2
+            w1.forEach(i1 => {
+                w2.forEach(i2 => {
+                    pairs.push({ i1, i2 })
+                });
+            });
+            pairs = shuffle(pairs)
+            console.log(pairs)
+            // can message back using event.source.postMessage(...)
+        });
+
+    </script>
+</head>
+
+<body>
+    <h1 class="ml6">
+        <span class="text-wrapper">
+            <span class="letters">Press &laquo;Next&raquo; to begin</span>
+        </span>
+    </h1>
+    <button class="next" onclick="next();">Next</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script>
+        // Wrap every letter in a span
+        var textWrapper = document.querySelector('.ml6 .letters');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        var button = document.querySelector('.next');
+        var ml6 = document.querySelector('.ml6');
+        i = 0
+
+        function next() {
+            button.disabled = true
+            anime({
+                targets: '.ml6',
+                opacity: 0,
+                duration: 1000,
+                easing: "easeOutExpo",
+            }).finished.then(function (anim) {
+
+                if (i == pairs.length) {
+                    pairs = shuffle(pairs)
+                    i = 0
+                }
+                s1 = pairs[i]["i1"] + " "
+                s2 = pairs[i]["i2"]
+
+                textWrapper.innerHTML = s1.replace(/\S/g, "<span class='letter'>$&</span>") + s2.replace(/\S/g, "<span class='letter2'>$&</span>");
+                i += 1
+
+                animation = anime.timeline({ loop: false })
+                    .add(
+                        {
+                            targets: '.ml6',
+                            opacity: 1,
+                            duration: 1,
+                            easing: "easeOutExpo",
+                        }
+                    )
+                    .add({
+                        targets: ".ml6 .letter",
+                        translateY: ["1.1em", 0],
+                        translateZ: 0,
+                        duration: 750,
+                        delay: (el, i, l) => 50 * i
+                    })
+                anime({
+                    targets: ".ml6 .letter2",
+                    translateY: ["1.1em", 0],
+                    translateZ: 0,
+                    duration: 750,
+                    delay: (el, i, l) => 50 * (l + 1 - i)
+                });
+                animation.complete = function (anim) {
+                    button.disabled = false
+                }
+            })
+        }
+        function next1() {
+            animation = anime.timeline({ loop: false })
+                .add({
+                    targets: '.ml6',
+                    opacity: 0.5,
+                    duration: 1000,
+                    easing: "easeOutExpo",
+                    delay: 1000
+                })
+                .add({
+                    targets: '.ml6 .letter',
+                    translateY: ["1.1em", 0],
+                    translateZ: 0,
+                    duration: 750,
+                    delay: (el, i) => 50 * i
+                })
+                .add({
+                    targets: '.ml6',
+                    opacity: 1
+                });
+            //animation.restart()
+
+            //textWrapper.innerHTML = "Test Num " + i
+            //i += 1
+            //textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+        }
+    </script>
+</body>
+
+</html>
