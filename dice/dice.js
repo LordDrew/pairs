@@ -456,7 +456,12 @@
             this.h = this.ch;
         }
         this.aspect = Math.min(this.cw / this.w, this.ch / this.h);
-        that.scale = Math.sqrt(this.w * this.w + this.h * this.h) / 3;
+
+        var params = $t.get_url_params();
+        if (params.nosettings)
+            that.scale = Math.sqrt(this.w * this.w + this.h * this.h) / 3;
+        else
+            that.scale = Math.sqrt(this.w * this.w + this.h * this.h) / 13;
 
         this.renderer.setSize(this.cw * 2, this.ch * 2);
 
