@@ -29,7 +29,7 @@ function dice_initialize(container) {
     $t.bind($t.id('link'), ['mouseup', 'touchend'], function(ev) {
         ev.stopPropagation();
         var notation = $t.dice.parse_notation(set.value);
-        prompt("Your link", "<iframe src=\"" 
+        prompt("Your link", "<iframe width=300 height=300 src=\""
         + window.location.href 
         + "?notation=" 
         + $t.dice.stringify_notation(notation) 
