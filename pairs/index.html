@@ -17,6 +17,15 @@
             result.value = "<iframe src=\"https://lorddrew.github.io/widgets/pairs/iframe_v2.html\" width=100% style=\"border:0 ;\" onload=\"";
             result.value += "this.contentWindow.postMessage('" + encode_data(data) + "', '*');\"></iframe>"
         } 
+        function load () {
+            var w1 = document.getElementById("w1")
+            var w2 = document.getElementById("w2")
+            var str = document.getElementById("load").value
+            encoded_data = str.match(/postMessage\('(.*?)', '\*'\);/)[1]
+            var data = JSON.parse(decodeURIComponent(encoded_data))
+            w1.value = data.w1.join('\n')
+            w2.value = data.w2.join('\n')
+        }
     </script>
 </head>
 <body>
@@ -29,5 +38,11 @@ line 4
 <button onclick="create();">Create</button>
 <textarea id="result" readonly=true rows=10 onclick="this.select()">
 </textarea>
+
+<textarea id="load" rows=10>
+Paste here to load and edit
+</textarea>
+<button onclick="load();">Load</button>
+
 </body>
 </html>
