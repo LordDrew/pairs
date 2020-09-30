@@ -22,6 +22,7 @@
     "></iframe>
 
 <iframe src="iframe.html" width=100% style="border:0 ;" onload="var data = {w1: [&quot;line 1\\\&quot;test&quot;, &quot;line 2&quot;, ],w2: [&quot;line 3&quot;, &quot;line 4&quot;, ]};this.contentWindow.postMessage(JSON.stringify(data), '*');"></iframe>
+<iframe src="iframe_v2.html" width=100% style="border:0 ;" onload="this.contentWindow.postMessage('%7B%22w1%22%3A%5B%22line%201%22%2C%22line%202%22%2C%22%5C%22some%20don%27t%5C%22%22%5D%2C%22w2%22%3A%5B%22line%203%22%2C%22line%204%22%2C%22%5C%22some%20don%27t%5C%22%22%5D%7D', '*');"></iframe>
 </body>
 
 </html>
