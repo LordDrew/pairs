@@ -1,0 +1,21 @@
+<script>
+        function encode_data(data) {
+            return encodeURIComponent(JSON.stringify(data)).replace(/[!'()*]/g, escape)
+        }
+        var data = [
+                    {"label":"Question 1", "question":"What CSS property is used for specifying the area between the content and its border?"}, // padding
+                    {"label":"Question 2", "question":"What CSS property is used for changing the font?"}, //font-family
+                    {"label":"Question 3", "question":"What CSS property is used for changing the color of text?"}, //color
+                    {"label":"Question 4", "question":"What CSS property is used for changing the boldness of text?"}, //font-weight
+                    {"label":"Question 5", "question":"What CSS property is used for changing the size of text?"}, //font-size
+                    {"label":"Question 6", "question":"What CSS property is used for changing the background color of a box?"}, //background-color
+                    {"label":"Question 7", "question":"Which word is used for specifying an HTML tag that is inside another tag?"}, //nesting
+                    {"label":"Question 8", "question":"Which side of the box is the third number in: margin:1px 1px 1px 1px; ?"}, //bottom
+                    {"label":"Question 9", "question":"What are the fonts that don't have serifs at the ends of letters called?"}, //sans-serif
+        ];
+</script>
+<iframe src="iframe.html" width=100% height=500 style="border:0 ;"
+onload="this.contentWindow.postMessage(encode_data(data), '*');"></iframe>
+
+<iframe src="iframe.html" width=100% height=500 style="border:0 ;" onload="this.contentWindow.postMessage('%5B%7B%22label%22%3A%22Question%201%22%2C%22question%22%3A%22Question%201%22%7D%2C%7B%22label%22%3A%22Question%202%22%2C%22question%22%3A%22Question%202%22%7D%5D', '*');"></iframe>
+<iframe src="iframe.html" width=100% height=500 style="border:0 ;" onload="this.contentWindow.postMessage('%5B%7B%22label%22%3A%22Question%201%22%2C%22question%22%3A%22Question%201%22%7D%2C%7B%22label%22%3A%22Question%202%22%2C%22question%22%3A%22here%22%7D%2C%7B%22label%22%3A%22Question%203%22%2C%22question%22%3A%22Question%203%5Cnlong%5Cnlong%5Cnlong%22%7D%5D', '*');"></iframe>

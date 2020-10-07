@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Wheel of words setup</title>
+</head>
+<body>
+<button onclick="add_row()">+</button>
+<div id="list"></div>
+<button onclick="create();">Create</button>
+<textarea id="result" readonly=true rows=10 onclick="this.select()">
+</textarea>
+
+<textarea id="load" rows=10>
+Paste here to load and edit
+</textarea>
+<button onclick="load();">Load</button>
+
+<script>
+    var list = document.getElementById("list")
+    var i = 0
+    function add_row(name1=0, name2=0) {
+        i = i + 1
+        if (name1 == 0) {name1 = "Question " + i}
+        if (name2 == 0) {name2 = "Question " + i}
+        
+        var p = document.createElement("p")
+        p.innerHTML = "" + i
+        var input1 = document.createElement("input")
+        input1.value = name1
+        input1.id = "input1"
+        var input2 = document.createElement("input")
+        input2.value = name2
+        input2.id = "input2"
+        var button = document.createElement("button")
+        button.innerHTML = "-"
+        button.onclick = function() {p.remove()}
+        p.appendChild(input1)
+        p.appendChild(input2)
+        p.appendChild(button)
+        list.appendChild(p)
+    }
+
+    function encode_data(data) {
+        return encodeURIComponent(JSON.stringify(data)).replace(/[!'()*]/g, escape)
+    }
+
+    function create() {
+        var data = []
+        for(var child=list.firstChild; child!==null; child=child.nextSibling) {
+            var elem = {
+                "label":child.childNodes[1].value,
+                "question":child.childNodes[2].value 
+            }
+           data.push(elem)
+        }
+
+        var result = document.getElementById("result")
+        result.value = "<iframe src=\"https://lorddrew.github.io/widgets/wheel/iframe.html\" width=100% height=500 style=\"border:0 ;\" onload=\"";
+        result.value += "this.contentWindow.postMessage('" + encode_data(data) + "', '*');\"></iframe>"
+    }
+
+    function load(){
+        var str = document.getElementById("load").value
+        encoded_data = str.match(/postMessage\('(.*?)', '\*'\);/)[1]
+        var data = JSON.parse(decodeURIComponent(encoded_data))
+        list.innerHTML = ""
+        for(var r in data) {
+            add_row(data[r]["label"], data[r]["question"])
+        }
+    }
+
+    add_row()
+</script>
+</body>
+</html>
