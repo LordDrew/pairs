@@ -6,6 +6,8 @@
 </head>
 <body>
 <button onclick="add_row()">+</button>
+<button onclick="copy_l()"><- copy all </button>
+<button onclick="copy_r()">copy all -> </button>
 <div id="list"></div>
 <button onclick="create();">Create</button>
 <textarea id="result" readonly=true rows=10 onclick="this.select()">
@@ -67,6 +69,19 @@ Paste here to load and edit
         list.innerHTML = ""
         for(var r in data) {
             add_row(data[r]["label"], data[r]["question"])
+        }
+    }
+
+    function copy_l()
+    {
+        for(var child=list.firstChild; child!==null; child=child.nextSibling) {
+            child.childNodes[1].value = child.childNodes[2].value 
+        }
+    }
+    function copy_r()
+    {
+        for(var child=list.firstChild; child!==null; child=child.nextSibling) {
+            child.childNodes[2].value = child.childNodes[1].value 
         }
     }
 
